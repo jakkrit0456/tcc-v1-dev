@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Change Password - TTC System</title>
-    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../../public/assets/css/style.css">
 </head>
 <body>
 
@@ -50,30 +50,26 @@
         const new_pass = document.getElementById('new_password').value;
         const confirm_pass = document.getElementById('confirm_password').value;
 
-        // ล้างสถานะ Alert เดิม
         alert.className = 'alert';
         alert.style.display = 'none';
 
-        // ตรวจสอบความยาวรหัสผ่าน (ตาม TOR 1.2.5)
         if (new_pass.length < 8) {
             alert.innerText = 'รหัสผ่านต้องมีความยาวอย่างน้อย 8 ตัวอักษร';
             alert.className = 'alert show error';
             return;
         }
 
-        // ตรวจสอบความถูกต้อง
         if (new_pass !== confirm_pass) {
             alert.innerText = 'รหัสผ่านใหม่และยืนยันรหัสผ่านไม่ตรงกัน';
             alert.className = 'alert show error';
             return;
         }
 
-        // เริ่มส่งข้อมูล
         btn.disabled = true;
         btn.innerText = 'กำลังบันทึกข้อมูล...';
 
         try {
-            const res = await fetch('../api/update-password.php', {
+            const res = await fetch('../../api/auth/passwordChange.php', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                 body: new URLSearchParams(new FormData(form))
@@ -85,7 +81,7 @@
                 alert.innerText = data.message;
                 alert.className = 'alert show success';
                 setTimeout(() => {
-                    window.location.href = 'dashboard.php';
+                    window.location.href = '../dashboard/dashboard.php';
                 }, 1500);
             } else {
                 alert.innerText = data.message;

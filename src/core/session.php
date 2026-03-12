@@ -24,14 +24,14 @@ function isSessionExpired(): bool
 function requireLogin(): void
 {
     if (!isset($_SESSION['user'])) {
-        header("Location: ../pages/login.php");
+        header("Location: /pages/auth/login.php");
         exit;
     }
 
     if (isSessionExpired()) {
         session_unset();
         session_destroy();
-        header("Location: ../pages/login.php?error=session_timeout");
+        header("Location: /pages/auth/login.php?error=session_timeout");
         exit;
     }
 

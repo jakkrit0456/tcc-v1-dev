@@ -1,9 +1,9 @@
 <?php
-require_once __DIR__ . '/../includes/session.php';
+require_once __DIR__ . '/../../src/core/session.php';
 
 if (isset($_SESSION['user']) && !isSessionExpired()) {
     updateLastActivity();
-    header("Location: ./dashboard.php");
+    header("Location: ../dashboard/dashboard.php");
     exit;
 }
 
@@ -18,7 +18,7 @@ if (isset($_GET['error']) && $_GET['error'] === 'session_timeout') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>เข้าสู่ระบบ</title>
-    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../../public/assets/css/style.css">
 </head>
 <body>
     <div class="page-wrapper">
@@ -60,6 +60,6 @@ if (isset($_GET['error']) && $_GET['error'] === 'session_timeout') {
         </div>
     </div>
 
-    <script src="../js/login.js"></script>
+    <script src="../../public/assets/js/login.js"></script>
 </body>
 </html>

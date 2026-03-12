@@ -1,10 +1,9 @@
 <?php
-// api/login.php
 
 header('Content-Type: application/json; charset=utf-8');
 
-require_once __DIR__ . '/../includes/session.php';
-require_once __DIR__ . '/../includes/auth.php';
+require_once __DIR__ . '/../../src/core/session.php';
+require_once __DIR__ . '/../../src/core/auth.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     echo json_encode([
@@ -56,6 +55,15 @@ if (!verifyPassword($password, $staff['staff_pass'] ?? null)) {
     exit;
 }
 
+if (mustChangePassword($staff['set_staff_passchange'])) {
+    echo json_encode([
+        'success' => true,
+        'message' => 'ต้องเปลี่ยนรหัสผ่านก่อนเข้าใช้งาน',
+        'redirect' => './change-password.php'
+    ], JSON_UNESCAPED_UNICODE);
+    exit;
+}
+
 session_regenerate_id(true);
 
 $_SESSION['user'] = [
@@ -67,13 +75,10 @@ $_SESSION['user'] = [
     'staff_sup'  => $staff['staff_sup'] ?? '',
 ];
 
-updateLastActivity();
-
-if (mustChangePassword($staff['set_staff_passchange'])) {
-    echo json_encode([
+echo json_encode([
         'success' => true,
-        'message' => 'ต้องเปลี่ยนรหัสผ่านก่อนเข้าใช้งาน',
-        'redirect' => '../pages/change-password.php'
+        'message' => 'เข้าสู่ระบบ',
+        'redirect' => './dashboard/dashboard.php'
     ], JSON_UNESCAPED_UNICODE);
-    exit;
-}
+
+updateLastActivity();

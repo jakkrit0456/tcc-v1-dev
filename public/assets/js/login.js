@@ -22,7 +22,7 @@ loginForm.addEventListener("submit", async (e) => {
     loginBtn.textContent = "กำลังเข้าสู่ระบบ...";
 
     try {
-        const response = await fetch("../api/login.php", {
+        const response = await fetch("../../api/auth/login.php", {
             method: "POST",
             body: formData
         });
